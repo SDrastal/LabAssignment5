@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections.Generic;
 
-public class SolutionOne : MonoBehaviour
+public class SolutionOne1 : MonoBehaviour
 {
     public bool hasTough;
     public bool isHillDwarf;
@@ -35,13 +33,34 @@ public class SolutionOne : MonoBehaviour
         1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7,
         8, 8, 9, 9, 10, 10
     };
+    private List<string> classes = new List<string>
+    {
+        "Artificer",
+        "Barbarian",
+        "Bard",
+        "Cleric",
+        "Druid",
+        "Fighter",
+        "Monk",
+        "Ranger",
+        "Rogue",
+        "Paladin",
+        "Sorcerer",
+        "Wizard",
+        "Warlock"
+    };
     private int hp;
 
     // Start is called before the first frame update
     void Start()
     {
         hp = (int)CalcHP();
-        //Debug.Log(DisplayMessage());
+        if (!classes.Contains(className) || level < 1 || level > 20 || con < 1 || con > 30 || charName == "")
+        {
+            Debug.Log("Invalid input");
+            return;
+        }
+        Debug.Log(DisplayMessage());
     }
 
     public float CalcHP()
@@ -56,7 +75,7 @@ public class SolutionOne : MonoBehaviour
             for (int i = 0; i < level; i++)
             {
                 if (isRolledHP) maxHP += Random.Range(1, (int)hitDie[className] + 1);
-                else maxHP += ((hitDie[className] + 1f) / 2f) + 0.5f);    
+                else maxHP += ((hitDie[className] + 1f) / 2f) + 0.5f;    
             }
         }
 
@@ -70,6 +89,6 @@ public class SolutionOne : MonoBehaviour
 
     public string DisplayMessage()
     {
-    
+        return $"My character {charName} is a level {level} {className} with a CON score of {con} and {(isHillDwarf ? "is" : "is not")} a Hill Dwarf and {(hasTough ? "has" : "does not have")} the Tough feat. I want the HP {(isRolledHP ? "rolled" : "averaged")}. HP: {hp}";
     }
 }
